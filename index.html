@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- 阻擋搜尋引擎（Google、Bing 等）抓取與收錄本頁面 -->
+<meta name="robots" content="noindex, nofollow">
+
+<title>技術服務工具箱</title>
+
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#C81E1E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="技術服務工具箱">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+
+<style>
+  :root{
+    --red:#C81E1E;
+    --red-deep:#9B1717;
+    --ink:#1B2734;
+    --ink-soft:#66707C;
+    --border:#E4E7EB;
+    --surface:#fff;
+    --bg:#FAFAFA;
+    --cpb:#2563EB;      /* CPB 藍色 */
+    --exhaust:#1D5C6E;  /* 浸染 藍綠色 */
+    --energy:#059669;   /* 浸染能耗 翡翠綠 */
+    --washing:#10B981;  /* 水洗能耗 綠色 */
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Noto Sans TC",sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100dvh;
+    padding-top:env(safe-area-inset-top);
+  }
+
+  header{
+    background:var(--red);
+    color:#fff;
+    padding:22px 20px 20px;
+  }
+  header h1{margin:0 0 4px;font-size:1.3rem;font-weight:800;letter-spacing:-.01em;}
+  header p{margin:0;color:rgba(255,255,255,.82);font-size:.85rem;}
+
+  .shell{max-width:640px;margin:0 auto;padding:20px 16px 48px;}
+
+  .category-title{
+    font-size:0.9rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin:20px 0 10px;
+    letter-spacing:0.02em;
+  }
+  .category-title:first-child{ margin-top:0; }
+
+  .tool-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .tool-tile{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+    text-decoration:none;
+    color:var(--ink);
+    border-left: 4px solid var(--accent); 
+    transition:box-shadow .15s ease, transform .1s ease;
+  }
+  .tool-tile:active{transform:scale(.98);}
+  
+  .tool-tile .tile-icon{
+    width:52px;
+    height:52px;
+    flex: 0 0 auto;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--accent);
+    color:#fff;
+    font-weight:800;
+    font-size:.72rem;
+    letter-spacing:-0.01em;
+    padding:2px;
+    text-align:center;
+    word-break:break-word;
+  }
+  
+  .tool-tile .tile-content {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .tool-tile .tile-name{font-weight:700;font-size:1rem;margin-bottom:3px;}
+  .tool-tile .tile-desc{font-size:.82rem;color:var(--ink-soft);line-height:1.3;}
+
+  .section-title{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .section-title h2{margin:0;font-size:.95rem;font-weight:700;color:var(--ink);}
+  .section-title span{font-size:.74rem;color:var(--ink-soft);}
+
+  .collapsible-section{margin-top:24px;}
+  .collapsible-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    text-align:left;
+    color:var(--ink);
+  }
+  .collapsible-chevron{
+    font-size:.85rem;
+    color:var(--ink-soft);
+    transition:transform .2s;
+    flex:0 0 auto;
+  }
+  .collapsible-toggle.open .collapsible-chevron{transform:rotate(180deg);}
+  .collapsible-body{margin-top:10px;}
+
+  .doc-shelf{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .doc-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 15px;
+    text-decoration:none;
+    color:var(--ink);
+    font-weight:600;
+    font-size:.88rem;
+    border-bottom:1px solid var(--border);
+  }
+  .doc-link:last-child{border-bottom:none;}
+  .doc-link:active{background:var(--bg);}
+  .doc-link .doc-icon{
+    width:30px;height:30px;
+    flex:0 0 auto;
+    border-radius:8px;
+    background:#F4E4E4;
+    color:var(--red);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .doc-link .doc-icon svg{width:16px;height:16px;}
+  .doc-link .doc-label{flex:1;line-height:1.35;}
+
+  footer{
+    text-align:center;
+    padding:20px 16px 40px;
+    font-size:.78rem;
+    color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>技術服務工具箱</h1>
+  <p>選擇要使用的工具</p>
+</header>
+
+<div class="shell">
+  <!-- 第一區：試染與配方工具 -->
+  <div class="category-title">試染與配方工具</div>
+  <div class="tool-grid">
+    <a class="tool-tile" style="--accent:var(--cpb)" href="https://ecictechdiv.github.io/CPB-Recipe-Calculator/">
+      <div class="tile-icon">CPB</div>
+      <div class="tile-content">
+        <div class="tile-name">CPB 冷軋堆</div>
+        <div class="tile-desc">CPB 染色配方計算</div>
+      </div>
+    </a>
+    
+    <a class="tool-tile" style="--accent:var(--exhaust)" href="https://ecictechdiv.github.io/Exhaust-Production/">
+      <div class="tile-icon">Exhaust</div>
+      <div class="tile-content">
+        <div class="tile-name">浸染試染工具</div>
+        <div class="tile-desc">配方鹽鹼建議・染程曲線</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 第二區：能耗與節能計算工具 -->
+  <div class="category-title">能耗與節能計算</div>
+  <div class="tool-grid">
+    <a class="tool-tile" style="--accent:var(--energy)" href="https://ecictechdiv.github.io/exhaust/">
+      <div class="tile-icon">Energy</div>
+      <div class="tile-content">
+        <div class="tile-name">浸染能耗計算</div>
+        <div class="tile-desc">染色能耗評估與數據分析</div>
+      </div>
+    </a>
+
+    <a class="tool-tile" style="--accent:var(--washing)" href="https://ecictechdiv.github.io/Continuous-Washing/">
+      <div class="tile-icon">Wash</div>
+      <div class="tile-content">
+        <div class="tile-name">連續水洗能耗計算</div>
+        <div class="tile-desc">水洗工程能耗與節水效益分析</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- 參考資料 -->
+  <div class="collapsible-section">
+    <button type="button" class="collapsible-toggle" data-toggle="docs">
+      <div class="section-title">
+        <h2>參考資料</h2>
+        <span>技術手冊</span>
+      </div>
+      <span class="collapsible-chevron">▾</span>
+    </button>
+    <div class="collapsible-body" data-body="docs" style="display:none;">
+      <div class="doc-shelf">
+        <a href="./everzol-manual.pdf" class="doc-link">
+          <span class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+          <span class="doc-label">Everzol 技術手冊</span>
+        </a>
+        <a href="./everzol-erc-solution.pdf" class="doc-link">
+          <span class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+          <span class="doc-label">Everzol ERC Solution（永續染整解決方案）</span>
+        </a>
+        <a href="./everacid-everset-manual.pdf" class="doc-link">
+          <span class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+          <span class="doc-label">Everacid／Everset 技術手冊</span>
+        </a>
+        <a href="./everzol-continuous-dyeing-manual.pdf" class="doc-link">
+          <span class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span>
+          <span class="doc-label">Everzol 連染技術手冊</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 常用連結 -->
+  <div class="collapsible-section">
+    <button type="button" class="collapsible-toggle" data-toggle="links">
+      <div class="section-title">
+        <h2>常用連結</h2>
+        <span>外部系統／官網</span>
+      </div>
+      <span class="collapsible-chevron">▾</span>
+    </button>
+    <div class="collapsible-body" data-body="links" style="display:none;">
+      <div class="doc-shelf">
+        <a href="https://cse.ecic.com.tw/" target="_blank" rel="noopener" class="doc-link">
+          <span class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+          <span class="doc-label">CSE 色彩查詢系統（需登入）</span>
+        </a>
+        <a href="https://everlight-ccbu.com/" target="_blank" rel="noopener" class="doc-link">
+          <span class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span>
+          <span class="doc-label">永光化學官網</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Everlight Chemical</footer>
+
+<script>
+document.querySelectorAll(".collapsible-toggle").forEach(btn=>{
+  const key = btn.dataset.toggle;
+  const body = document.querySelector(`.collapsible-body[data-body="${key}"]`);
+  btn.addEventListener("click", ()=>{
+    const willOpen = body.style.display === "none";
+    body.style.display = willOpen ? "block" : "none";
+    btn.classList.toggle("open", willOpen);
+  });
+});
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load", ()=>{
+    navigator.serviceWorker.register("./sw.js").catch(err=>{
+      console.error("Service worker registration failed:", err);
+    });
+  });
+}
+</script>
+</body>
+</html>
