@@ -13,7 +13,7 @@
 // 沒有改版本號，就算檔案內容不同，瀏覽器也可能誤判成沒變化。
 // ============================================================
 
-const CACHE_NAME = "toolbox-cache-v2";
+const CACHE_NAME = "toolbox-cache-v4";
 
 const PRECACHE_URLS = [
   "./",

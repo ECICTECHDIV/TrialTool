@@ -10,6 +10,17 @@ const ICONS = {
   globe: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>`
 };
 
+// 圖示框固定 56px，字太多會塞不下——依字數給不同字級，短的（CPB）維持大字好認，
+// 長的（Exhaust）自動縮小到塞得下一行，不用大家將就同一個尺寸
+function iconFontSize(label){
+  const len = (label || "").length;
+  if(len <= 3) return "1rem";
+  if(len <= 4) return "0.88rem";
+  if(len <= 5) return "0.8rem";
+  if(len <= 6) return "0.72rem";
+  return "0.62rem";
+}
+
 /* ---- 渲染工具分類清單 ---- */
 function renderToolCategories(){
   const container = document.getElementById("toolCategories");
@@ -18,7 +29,7 @@ function renderToolCategories(){
     <div class="tool-grid">
       ${cat.tools.map(t => `
         <a class="tool-tile" style="--accent:${t.accent}" href="${t.url}">
-          <div class="tile-icon">${t.iconLabel}</div>
+          <div class="tile-icon" style="font-size:${iconFontSize(t.iconLabel)}">${t.iconLabel}</div>
           <div class="tile-content">
             <div class="tile-name">${t.name}</div>
           </div>
