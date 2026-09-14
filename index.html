@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- 阻擋搜尋引擎（Google、Bing 等）抓取與收錄本頁面 -->
+<meta name="robots" content="noindex, nofollow">
+<!-- 避免瀏覽器把入口頁本體快取住，確保每次刷新都拿到最新版 -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<title>技術服務工具箱</title>
+
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#C81E1E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="技術服務工具箱">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+
+<style>
+  :root{
+    --red:#C81E1E;
+    --red-deep:#9B1717;
+    --ink:#1B2734;
+    --ink-soft:#66707C;
+    --border:#E4E7EB;
+    --surface:#fff;
+    --bg:#FAFAFA;
+    --cpb:#2563A6;      /* CPB 藍色（取自工具本身 theme-color） */
+    --exhaust:#1F8A7A;  /* 浸染試染 青色（取自工具本身 theme-color） */
+    --dye-energy:#A67530;   /* 浸染能耗 - 琥珀色（避免跟紅色系的儲存/刪除圖示撞色） */
+    --wash-energy:#0E7FA6;  /* 連續水洗能耗 - 藍色（取自工具圖示底色） */
+    font-size: clamp(17px, 15.7px + 0.17vw, 19px);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang TC","Noto Sans TC",sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100dvh;
+    padding-top:env(safe-area-inset-top);
+  }
+
+  header{
+    background:var(--red);
+    color:#fff;
+    padding:22px 20px 20px;
+  }
+  header h1{margin:0 0 4px;font-size:1.3rem;font-weight:800;letter-spacing:-.01em;}
+  header p{margin:0;color:rgba(255,255,255,.82);font-size:.85rem;}
+  @media (min-width:640px){
+    header{padding:28px 24px 26px;}
+    header h1{font-size:1.6rem;}
+  }
+
+  .shell{max-width:640px;margin:0 auto;padding:20px 16px 48px;}
+  @media (min-width:640px){
+    .shell{padding:20px 24px 48px;}
+  }
+
+  .category-title{
+    font-size:0.9rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin:20px 0 10px;
+    letter-spacing:0.02em;
+  }
+  .category-title:first-child{ margin-top:0; }
+
+  .tool-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .tool-tile{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px 16px;
+    text-decoration:none;
+    color:var(--ink);
+    border-left: 4px solid var(--accent); 
+    transition:box-shadow .15s ease, transform .1s ease;
+  }
+  .tool-tile:active{transform:scale(.98);}
+  
+  .tool-tile .tile-icon{
+    width:52px;
+    height:52px;
+    flex: 0 0 auto;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--accent);
+    color:#fff;
+    font-weight:800;
+    font-size:.72rem;
+    letter-spacing:-0.01em;
+    padding:2px;
+    text-align:center;
+    word-break:break-word;
+  }
+  
+  .tool-tile .tile-content {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .tool-tile .tile-name{font-weight:700;font-size:1.02rem;margin:0;}
+
+  .section-title{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .section-title h2{margin:0;font-size:.9rem;font-weight:700;color:var(--ink-soft);letter-spacing:0.02em;}
+
+  .collapsible-section{margin-top:24px;}
+  .collapsible-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    text-align:left;
+    color:var(--ink);
+  }
+  .collapsible-chevron{
+    font-size:.85rem;
+    color:var(--ink-soft);
+    transition:transform .2s;
+    flex:0 0 auto;
+  }
+  .collapsible-toggle.open .collapsible-chevron{transform:rotate(180deg);}
+  .collapsible-body{margin-top:10px;}
+
+  .doc-shelf{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .doc-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 15px;
+    text-decoration:none;
+    color:var(--ink);
+    font-weight:600;
+    font-size:.88rem;
+    border-bottom:1px solid var(--border);
+  }
+  .doc-link:last-child{border-bottom:none;}
+  .doc-link:active{background:var(--bg);}
+  .doc-link .doc-icon{
+    width:30px;height:30px;
+    flex:0 0 auto;
+    border-radius:8px;
+    background:#F4E4E4;
+    color:var(--red);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .doc-link .doc-icon svg{width:16px;height:16px;}
+  .doc-link .doc-label{flex:1;line-height:1.35;}
+
+  footer{
+    text-align:center;
+    padding:20px 16px 40px;
+    font-size:.78rem;
+    color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>技術服務工具箱</h1>
+</header>
+
+<div class="shell">
+  <div id="toolCategories"></div>
+
+  <!-- 參考資料 -->
+  <div class="collapsible-section">
+    <button type="button" class="collapsible-toggle" data-toggle="docs">
+      <div class="section-title">
+        <h2>技術資料</h2>
+      </div>
+      <span class="collapsible-chevron">▾</span>
+    </button>
+    <div class="collapsible-body" data-body="docs" style="display:none;">
+      <div class="doc-shelf" id="docLinksShelf"></div>
+    </div>
+  </div>
+
+  <!-- 常用連結 -->
+  <div class="collapsible-section">
+    <button type="button" class="collapsible-toggle" data-toggle="links">
+      <div class="section-title">
+        <h2>常用連結</h2>
+      </div>
+      <span class="collapsible-chevron">▾</span>
+    </button>
+    <div class="collapsible-body" data-body="links" style="display:none;">
+      <div class="doc-shelf" id="commonLinksShelf"></div>
+    </div>
+  </div>
+</div>
+
+<footer>Everlight Chemical</footer>
+
+<script src="./data.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
