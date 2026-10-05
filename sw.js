@@ -13,9 +13,9 @@
 // 沒有改版本號，就算檔案內容不同，瀏覽器也可能誤判成沒變化。
 // ============================================================
 
-const CACHE_NAME = "toolbox-cache-v4";
+const CACHE_NAME = "toolbox-cache-v5";
 
-const PRECACHE_URLS = [
+const CORE_URLS = [
   "./",
   "./index.html",
   "./data.js",
@@ -23,20 +23,23 @@ const PRECACHE_URLS = [
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
+];
+const PDF_URLS = [
   "./everzol-manual.pdf",
   "./everzol-erc-solution.pdf",
   "./everacid-everset-manual.pdf",
   "./everzol-continuous-dyeing-manual.pdf",
 ];
 
-// 安裝階段：把上面列的檔案先抓下來放進快取
+// 安裝階段：核心檔案必須成功；PDF 逐一下載、失敗就略過，
+// 不讓單一大檔失敗拖垮整個安裝
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_URLS);
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await cache.addAll(CORE_URLS);
+      await Promise.all(PDF_URLS.map((u) => cache.add(u).catch(() => {})));
     })
   );
-  // 不等舊分頁關閉，新版 SW 馬上準備接管
   self.skipWaiting();
 });
 
@@ -56,28 +59,55 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// 攔截請求：網路優先，失敗才退回快取
+// 攔截請求
 self.addEventListener("fetch", (event) => {
-  // 只處理 GET，且只處理自己網域內的請求
-  if (event.request.method !== "GET") return;
+  const req = event.request;
+  if (req.method !== "GET") return;
+  if (new URL(req.url).origin !== self.location.origin) return;
+  // 分段讀取（Range）請求不攔截，交給瀏覽器直接處理，
+  // 否則手機的 PDF 檢視器會卡住或空白
+  if (req.headers.has("range")) return;
 
+  const isPdf = /\.pdf$/i.test(new URL(req.url).pathname);
+
+  if (isPdf) {
+    // PDF：有快取就直接秒開，沒有才連網；不在這裡等網路
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        if (cached) return cached;
+        return fetch(req).then((res) => {
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(req, copy));
+          }
+          return res;
+        });
+      })
+    );
+    return;
+  }
+
+  // 其他檔案：網路優先，但 4 秒沒回應就退回快取，避免訊號差時整頁卡住
   event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        // 拿到新的回應就順手更新快取，下次離線也是相對新的版本
-        const responseClone = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
-        return networkResponse;
-      })
-      .catch(() => {
-        // 離線或連線失敗時，退回快取版本
-        return caches.match(event.request).then((cached) => {
-          if (cached) return cached;
-          // 沒快取又離線的情況（例如第一次造訪就斷線），直接讓它失敗
-          throw new Error("網路離線，且此檔案沒有快取版本");
-        });
-      })
+    new Promise((resolve) => {
+      let done = false;
+      const fallback = () =>
+        caches.match(req).then((cached) => cached || Response.error());
+      const timer = setTimeout(() => {
+        if (done) return;
+        fallback().then((r) => { if (!done) { done = true; resolve(r); } });
+      }, 4000);
+      fetch(req).then((res) => {
+        clearTimeout(timer);
+        if (res && res.status === 200) {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((c) => c.put(req, copy));
+        }
+        if (!done) { done = true; resolve(res); }
+      }).catch(() => {
+        clearTimeout(timer);
+        fallback().then((r) => { if (!done) { done = true; resolve(r); } });
+      });
+    })
   );
 });

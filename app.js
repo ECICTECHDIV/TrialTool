@@ -43,7 +43,7 @@ function renderToolCategories(){
 function renderLinkShelf(containerId, items){
   const container = document.getElementById(containerId);
   container.innerHTML = items.map(item => `
-    <a href="${item.url}" class="doc-link"${item.external ? ' target="_blank" rel="noopener"' : ""}>
+    <a href="${item.url}" class="doc-link"${(item.external || /\.pdf$/i.test(item.url)) ? ' target="_blank" rel="noopener"' : ""}>
       <span class="doc-icon">${ICONS[item.icon || "doc"]}</span>
       <span class="doc-label">${item.label}</span>
     </a>
