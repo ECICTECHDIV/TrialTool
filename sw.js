@@ -14,7 +14,7 @@
 // 沒有改版本號，就算檔案內容不同，瀏覽器也可能誤判成沒變化。
 // ============================================================
 
-const CACHE_NAME = "toolbox-cache-v8";
+const CACHE_NAME = "toolbox-cache-v9";
 
 const CORE_URLS = [
   "./",
@@ -39,7 +39,8 @@ const PDF_URLS = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
-      await cache.addAll(CORE_URLS);
+      // 安裝時一律跳過瀏覽器 HTTP 快取，確保抓到 GitHub 上的最新版
+      await cache.addAll(CORE_URLS.map((u) => new Request(u, { cache: "no-cache" })));
       await Promise.all(PDF_URLS.map((u) => cache.add(u).catch(() => {})));
     })
   );
@@ -100,7 +101,9 @@ self.addEventListener("fetch", (event) => {
         if (done) return;
         fallback().then((r) => { if (!done) { done = true; resolve(r); } });
       }, 4000);
-      fetch(req).then((res) => {
+      // cache: "no-cache"：每次都向伺服器確認是否有新版，
+      // 避免瀏覽器沿用最多 10 分鐘的舊 data.js / app.js
+      fetch(req, { cache: "no-cache" }).then((res) => {
         clearTimeout(timer);
         if (res && res.status === 200) {
           const copy = res.clone();
