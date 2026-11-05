@@ -1,7 +1,7 @@
 /* ============================================================
  * app.js — 技術服務工具箱（入口頁）：邏輯（畫面渲染 / 收合 / PWA 註冊）
  * 這個檔案依賴 data.js 先載入（用到 TOOL_CATEGORIES、DOC_LINKS、
- * DM_LINKS、COMMON_LINKS 等常數）。
+ * DM_GROUPS、COMMON_LINKS 等常數）。
  * ============================================================ */
 
 const ICONS = {
@@ -52,7 +52,11 @@ function renderLinkShelf(containerId, items){
 
 renderToolCategories();
 renderLinkShelf("docLinksShelf", DOC_LINKS);
-renderLinkShelf("dmLinksShelf", DM_LINKS);
+/* ---- 產品 DM：依品牌分小類，每類一個列表 ---- */
+document.getElementById("dmGroups").innerHTML = DM_GROUPS.map((g, i) =>
+  `<div class="sub-title">${g.title}</div><div class="doc-shelf" id="dmShelf${i}"></div>`
+).join("");
+DM_GROUPS.forEach((g, i) => renderLinkShelf(`dmShelf${i}`, g.items));
 renderLinkShelf("commonLinksShelf", COMMON_LINKS);
 
 /* ---- 收合區塊（技術資料／產品 DM／常用連結） ---- */

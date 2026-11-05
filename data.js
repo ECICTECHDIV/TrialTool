@@ -33,31 +33,52 @@ const DOC_LINKS = [
   { url: "./everacid-everset-manual.pdf", label: "Everacid／Everset 技術手冊" }
 ];
 
-/* ---- 產品 DM（點開時才下載，不預先快取） ---- */
-const DM_LINKS = [
-  { url: "./everzol-black-mwf.pdf", label: "Everzol Black MWF" },
-  { url: "./everzol-mx.pdf", label: "Everzol MX" },
-  { url: "./everzol-ed.pdf", label: "Everzol ED" },
-  { url: "./everzol-lx-lf.pdf", label: "Everzol LX & LF" },
-  { url: "./everzol-fc.pdf", label: "Everzol FC" },
-  { url: "./everzol-cs.pdf", label: "Everzol CS" },
-  { url: "./everzol-cellulose-discharge.pdf", label: "Everzol 可拔白反應性染料（Cellulose Discharge Printing）" },
-  { url: "./everzol-kmno4-discharge.pdf", label: "Everzol for Potassium Permanganate Discharge" },
-  { url: "./everzol-non-photochromism.pdf", label: "Everzol 無光致變色解決方案（Non-photochromism）" },
-  { url: "./everzol-go-green.pdf", label: "Everzol GO GREEN" },
-  { url: "./everzol-emerized-fabrics.pdf", label: "Everzol for Emerized Fabrics" },
-  { url: "./everzol-gas-fading.pdf", label: "Everzol Best Solution for Gas Fading" },
-  { url: "./everacid-x-bw.pdf", label: "Everacid X-BW" },
-  { url: "./everacid-metal-free.pdf", label: "Everacid Metal-Free Range" },
-  { url: "./everset-pa.pdf", label: "Everset PA" },
-  { url: "./evertex-plf-03.pdf", label: "Evertex PLF-03" },
-  { url: "./evertex-wrf-01.pdf", label: "Evertex WRF-01" },
-  { url: "./evertex-cfix-t.pdf", label: "Evertex CFIX-T" },
-  { url: "./evertex-nfix-bpf.pdf", label: "Evertex NFIX-BPF" },
-  { url: "./evertex-cf.pdf", label: "Evertex CF" },
-  { url: "./everjet-rt-hlf.pdf", label: "Everjet RT-HLF" },
-  { url: "./evertint-ws.pdf", label: "Evertint WS 高分子染料" },
-  { url: "./zdhc-roadmap-to-zero.pdf", label: "ZDHC Roadmap to Zero" }
+/* ---- 產品 DM（依品牌分小類；點開時才下載，不預先快取） ---- */
+const DM_GROUPS = [
+  {
+    title: "Everzol",
+    items: [
+      { url: "./everzol-black-mwf.pdf", label: "Everzol Black MWF" },
+      { url: "./everzol-mx.pdf", label: "Everzol MX" },
+      { url: "./everzol-ed.pdf", label: "Everzol ED" },
+      { url: "./everzol-lx-lf.pdf", label: "Everzol LX & LF" },
+      { url: "./everzol-fc.pdf", label: "Everzol FC" },
+      { url: "./everzol-cs.pdf", label: "Everzol CS" },
+      { url: "./everzol-kmno4-discharge.pdf", label: "Everzol for Potassium Permanganate Discharge" },
+      { url: "./everzol-non-photochromism.pdf", label: "Everzol 無光致變色解決方案（Non-photochromism）" },
+      { url: "./everzol-go-green.pdf", label: "Everzol GO GREEN" },
+      { url: "./everzol-erc-solution-dm.pdf", label: "Everzol ERC Solution" },
+      { url: "./everzol-emerized-fabrics.pdf", label: "Everzol for Emerized Fabrics" },
+      { url: "./everzol-gas-fading.pdf", label: "Everzol Best Solution for Gas Fading" }
+    ]
+  },
+  {
+    title: "Everacid／Everset",
+    items: [
+      { url: "./everacid-x-bw.pdf", label: "Everacid X-BW" },
+      { url: "./everacid-s.pdf", label: "Everacid S" },
+      { url: "./everacid-metal-free.pdf", label: "Everacid Metal-Free Range" },
+      { url: "./everset-pa.pdf", label: "Everset PA" }
+    ]
+  },
+  {
+    title: "Evertex",
+    items: [
+      { url: "./evertex-plf-03.pdf", label: "Evertex PLF-03" },
+      { url: "./evertex-nlf-01.pdf", label: "Evertex NLF-01" },
+      { url: "./evertex-wrf-01.pdf", label: "Evertex WRF-01" },
+      { url: "./evertex-cfix-t.pdf", label: "Evertex CFIX-T" },
+      { url: "./evertex-nfix-bpf.pdf", label: "Evertex NFIX-BPF" },
+      { url: "./evertex-cf.pdf", label: "Evertex CF" }
+    ]
+  },
+  {
+    title: "其他",
+    items: [
+      { url: "./everclear-dyeing-solution.pdf", label: "Everclear Dyeing Solution" },
+      { url: "./zdhc-roadmap-to-zero.pdf", label: "ZDHC Roadmap to Zero" }
+    ]
+  }
 ];
 
 /* ---- 常用連結 ---- */

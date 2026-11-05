@@ -179,6 +179,15 @@
   .doc-link .doc-icon svg{width:16px;height:16px;}
   .doc-link .doc-label{flex:1;line-height:1.35;}
 
+  .sub-title{
+    font-size:.8rem;
+    font-weight:700;
+    color:var(--red);
+    margin:14px 0 6px 2px;
+    letter-spacing:.02em;
+  }
+  .sub-title:first-child{margin-top:0;}
+
   footer{
     text-align:center;
     padding:20px 16px 40px;
@@ -217,7 +226,7 @@
       <span class="collapsible-chevron">▾</span>
     </button>
     <div class="collapsible-body" data-body="dm" style="display:none;">
-      <div class="doc-shelf" id="dmLinksShelf"></div>
+      <div id="dmGroups"></div>
     </div>
   </div>
 

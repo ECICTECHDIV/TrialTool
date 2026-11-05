@@ -14,7 +14,7 @@
 // 沒有改版本號，就算檔案內容不同，瀏覽器也可能誤判成沒變化。
 // ============================================================
 
-const CACHE_NAME = "toolbox-cache-v9";
+const CACHE_NAME = "toolbox-cache-v10";
 
 const CORE_URLS = [
   "./",
