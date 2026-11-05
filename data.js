@@ -26,9 +26,38 @@ const TOOL_CATEGORIES = [
 /* ---- 技術資料（PDF 手冊） ---- */
 const DOC_LINKS = [
   { url: "./everzol-manual.pdf", label: "Everzol 技術手冊" },
+  { url: "./everzol-continuous-dyeing-manual.pdf", label: "Everzol 冷壓染與連續染色技術手冊" },
   { url: "./everzol-erc-solution.pdf", label: "Everzol ERC Solution（永續染整解決方案）" },
-  { url: "./everacid-everset-manual.pdf", label: "Everacid／Everset 技術手冊" },
-  { url: "./everzol-continuous-dyeing-manual.pdf", label: "Everzol 連染技術手冊" }
+  { url: "./evercion-manual.pdf", label: "Evercion 技術手冊" },
+  { url: "./everdirect-manual.pdf", label: "Everdirect 技術手冊" },
+  { url: "./everacid-everset-manual.pdf", label: "Everacid／Everset 技術手冊" }
+];
+
+/* ---- 產品 DM（點開時才下載，不預先快取） ---- */
+const DM_LINKS = [
+  { url: "./dm/everzol-black-mwf.pdf", label: "Everzol Black MWF" },
+  { url: "./dm/everzol-mx.pdf", label: "Everzol MX" },
+  { url: "./dm/everzol-ed.pdf", label: "Everzol ED" },
+  { url: "./dm/everzol-lx-lf.pdf", label: "Everzol LX & LF" },
+  { url: "./dm/everzol-fc.pdf", label: "Everzol FC" },
+  { url: "./dm/everzol-cs.pdf", label: "Everzol CS" },
+  { url: "./dm/everzol-cellulose-discharge.pdf", label: "Everzol 可拔白反應性染料（Cellulose Discharge Printing）" },
+  { url: "./dm/everzol-kmno4-discharge.pdf", label: "Everzol for Potassium Permanganate Discharge" },
+  { url: "./dm/everzol-non-photochromism.pdf", label: "Everzol 無光致變色解決方案（Non-photochromism）" },
+  { url: "./dm/everzol-go-green.pdf", label: "Everzol GO GREEN" },
+  { url: "./dm/everzol-emerized-fabrics.pdf", label: "Everzol for Emerized Fabrics" },
+  { url: "./dm/everzol-gas-fading.pdf", label: "Everzol Best Solution for Gas Fading" },
+  { url: "./dm/everacid-x-bw.pdf", label: "Everacid X-BW" },
+  { url: "./dm/everacid-metal-free.pdf", label: "Everacid Metal-Free Range" },
+  { url: "./dm/everset-pa.pdf", label: "Everset PA" },
+  { url: "./dm/evertex-plf-03.pdf", label: "Evertex PLF-03" },
+  { url: "./dm/evertex-wrf-01.pdf", label: "Evertex WRF-01" },
+  { url: "./dm/evertex-cfix-t.pdf", label: "Evertex CFIX-T" },
+  { url: "./dm/evertex-nfix-bpf.pdf", label: "Evertex NFIX-BPF" },
+  { url: "./dm/evertex-cf.pdf", label: "Evertex CF" },
+  { url: "./dm/everjet-rt-hlf.pdf", label: "Everjet RT-HLF" },
+  { url: "./dm/evertint-ws.pdf", label: "Evertint WS 高分子染料" },
+  { url: "./dm/zdhc-roadmap-to-zero.pdf", label: "ZDHC Roadmap to Zero" }
 ];
 
 /* ---- 常用連結 ---- */

@@ -1,7 +1,7 @@
 /* ============================================================
  * app.js — 技術服務工具箱（入口頁）：邏輯（畫面渲染 / 收合 / PWA 註冊）
  * 這個檔案依賴 data.js 先載入（用到 TOOL_CATEGORIES、DOC_LINKS、
- * COMMON_LINKS 等常數）。
+ * DM_LINKS、COMMON_LINKS 等常數）。
  * ============================================================ */
 
 const ICONS = {
@@ -52,9 +52,10 @@ function renderLinkShelf(containerId, items){
 
 renderToolCategories();
 renderLinkShelf("docLinksShelf", DOC_LINKS);
+renderLinkShelf("dmLinksShelf", DM_LINKS);
 renderLinkShelf("commonLinksShelf", COMMON_LINKS);
 
-/* ---- 收合區塊（技術資料／常用連結） ---- */
+/* ---- 收合區塊（技術資料／產品 DM／常用連結） ---- */
 document.querySelectorAll(".collapsible-toggle").forEach(btn=>{
   const key = btn.dataset.toggle;
   const body = document.querySelector(`.collapsible-body[data-body="${key}"]`);

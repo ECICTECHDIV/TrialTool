@@ -1,13 +1,13 @@
 {
-  "name": "染整工具箱",
-  "short_name": "染整工具箱",
-  "description": "CPB冷軋堆計算・浸染試染工具・技術手冊入口",
+  "name": "技術服務工具箱",
+  "short_name": "技服工具箱",
+  "description": "試染與配方工具・能耗計算・技術手冊入口",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#F2F4F5",
-  "theme_color": "#1F2937",
+  "background_color": "#FAFAFA",
+  "theme_color": "#C81E1E",
   "lang": "zh-Hant",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

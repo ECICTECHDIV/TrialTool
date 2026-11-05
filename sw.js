@@ -4,8 +4,9 @@
 // 策略：
 // - 頁面本體 (index.html)、CSS、JS：一律「網路優先」，能連網就一定拿最新版，
 //   只有離線時才退回快取
-// - 四份 PDF 手冊、App 圖示：安裝時預先下載進快取，離線也能開，
+// - 六份 PDF 手冊、App 圖示：安裝時預先下載進快取，離線也能開，
 //   但平常還是先試著連網抓最新檔案，抓不到才用快取版本
+// - 產品 DM（dm/ 資料夾）：不預先下載，第一次點開時才抓，抓過之後離線也能開
 //
 // 重要：每次你更新這份 sw.js 或改動下面的 PRECACHE_URLS，
 // 記得把 CACHE_NAME 的版本號 +1（例如 v1 → v2），
@@ -13,7 +14,7 @@
 // 沒有改版本號，就算檔案內容不同，瀏覽器也可能誤判成沒變化。
 // ============================================================
 
-const CACHE_NAME = "toolbox-cache-v5";
+const CACHE_NAME = "toolbox-cache-v7";
 
 const CORE_URLS = [
   "./",
@@ -29,6 +30,8 @@ const PDF_URLS = [
   "./everzol-erc-solution.pdf",
   "./everacid-everset-manual.pdf",
   "./everzol-continuous-dyeing-manual.pdf",
+  "./evercion-manual.pdf",
+  "./everdirect-manual.pdf",
 ];
 
 // 安裝階段：核心檔案必須成功；PDF 逐一下載、失敗就略過，
